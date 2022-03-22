@@ -3,29 +3,22 @@ const cors = require('cors')
 
 
 const app = express()
-
+require("dotenv").config();
 // middleware
 
 app.use(express.json())
-
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 
 
 // routers
-const router = require('./routes/productRouter.js')
-app.use('/api/products', router)
+const patientRoutes = require('./routes/patient.js')
 
-//static Images Folder
-
-app.use('/Images', express.static('./Images'))
+app.use('/api/patient', patientRoutes)
 
 
-//port
-
-const PORT = process.env.PORT || 8080
-
-//server
+const PORT = process.env.NODE_DOCKER_PORT || 5000
 
 app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`)
+    console.log(`Server is running on port ${PORT}`)
 })
